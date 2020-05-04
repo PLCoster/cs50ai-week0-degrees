@@ -87,13 +87,56 @@ def main():
 def shortest_path(source, target):
     """
     Returns the shortest list of (movie_id, person_id) pairs
-    that connect the source to the target.
+    that connect the source to the target, using BFS.
+
+    source and target are unique IMDB actor ID's
 
     If no possible path, returns None.
     """
 
-    # TODO
-    raise NotImplementedError
+    # Initialise a QueueFrontier for BFS, with the starting actor ID:
+    start = Node(source, None, None)
+    frontier = QueueFrontier()
+    frontier.add(start)
+
+    # Initialise an empty explored set to hold explored states (actors):
+    explored = set()
+
+    # Loop until a solution is found, or Frontier is empty(no solution):
+    while True:
+
+      # Check for empty Frontier and return with no path if empty
+      if frontier.empty():
+        print('Frontier is Empty - No Connection Between Actors!')
+        return None
+
+      # Otherwise expand the next node in the Queue, add it to the explored states and get set of movies and actors for the actor in the current node:
+      curr_node = frontier.remove()
+      explored.add(curr_node.state)
+
+      for action, state in neighbors_for_person(curr_node.state):
+
+        # If state (actor) is the target actor then solution has been found, return path:
+        if state == target:
+          print('Solution Found!')
+          print(len(explored), 'actors explored to find solution!')
+          # Create path from source to target
+          path = []
+          path.append((action, state))
+
+          # Add action and state to path until back to start node
+          while curr_node.parent != None:
+            path.append((curr_node.action, curr_node.state))
+            curr_node = curr_node.parent
+
+          path.reverse()
+
+          return path
+
+        # Otherwise add the new states to explore to the frontier:
+        if not frontier.contains_state(state) and state not in explored:
+          new_node = Node(state, curr_node, action)
+          frontier.add(new_node)
 
 
 def person_id_for_name(name):
