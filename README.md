@@ -41,8 +41,10 @@ You should not modify anything else in the file other than the shortest_path fun
 ## Usage
 
 * Small database usage:
+
   $ python degrees.py small
 * Large database usage:
+
   $ python degrees.py large
   OR
   $ python degrees.py
