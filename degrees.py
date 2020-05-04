@@ -105,9 +105,14 @@ def shortest_path(source, target):
     # Loop until a solution is found, or Frontier is empty(no solution):
     while True:
 
+      if len(explored) % 100 == 0:
+        print('Actors explored to find solution: ', len(explored))
+        print('Nodes left to expand in Frontier: ', len(frontier.frontier))
+
       # Check for empty Frontier and return with no path if empty
       if frontier.empty():
         print('Frontier is Empty - No Connection Between Actors!')
+        print(len(explored), 'actors explored to with no solution found!')
         return None
 
       # Otherwise expand the next node in the Queue, add it to the explored states and get set of movies and actors for the actor in the current node:
