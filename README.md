@@ -40,9 +40,12 @@ You should not modify anything else in the file other than the shortest_path fun
 
 ## Usage
 
+Requires Python(3) to run:
+
 * Small database usage:
 
   $ python degrees.py small
+
 * Large database usage:
 
   $ python degrees.py large
